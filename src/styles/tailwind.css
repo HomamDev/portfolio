@@ -1,0 +1,10 @@
+@import 'tailwindcss' source(none);
+@source '../**/*.{js,ts,jsx,tsx}';
+
+@import 'tw-animate-css';
+
+@keyframes floatUp {
+  0%, 100% { transform: translateY(0px); }
+  40%       { transform: translateY(-18px); }
+  70%       { transform: translateY(-8px); }
+}

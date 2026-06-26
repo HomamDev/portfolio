@@ -72,8 +72,8 @@ src/
 
 ## Links
 
-- [X (Twitter)](https://x.com/dev108_homam)
-- [YouTube](https://www.youtube.com/@HomamDev)
+- [X (Twitter)](https://x.com/HomamDev)
+- [YouTube](https://youtube.com/@HomamDev)
 
 ## Acknowledgements
 

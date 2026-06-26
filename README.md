@@ -2,7 +2,9 @@
 
 Personal portfolio website for **Homam**, a Full-Stack Developer. Built with a glassmorphism aesthetic, animated floating tech icons, and dark/light mode support.
 
-> **Status:** Work in progress — additional sections and code improvements are planned.
+![Portfolio Preview](/public/preview.png)
+
+> **Status:** Work in progress — additional content and improvements are planned.
 
 ## Tech Stack
 

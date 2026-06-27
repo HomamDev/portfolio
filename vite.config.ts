@@ -24,6 +24,7 @@ export default defineConfig({
     react(),
     tailwindcss(),
     compression({ algorithm: 'gzip' }),
+    compression({ algorithm: 'brotliCompress' }),
   ],
   resolve: {
     alias: {

@@ -69,7 +69,7 @@ export default function Navbar({ isDark, onToggleTheme }: NavbarProps) {
       if (element) {
         const navbarHeight = 80;
         const elementPosition = element.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - navbarHeight;
+        const offsetPosition = elementPosition + window.scrollY - navbarHeight;
         
         window.scrollTo({
           top: offsetPosition,

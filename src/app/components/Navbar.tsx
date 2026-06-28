@@ -1,8 +1,9 @@
-import { useState, useEffect, useRef, useMemo } from "react";
+import { useState, useMemo } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Moon, Sun, Heart, Menu, X, ChevronDown } from "lucide-react";
 import { useIsMobile } from "@/app/hooks/useIsMobile";
 import { useActiveSection } from "@/app/hooks/useActiveSection";
+import NavMenu from "@/app/components/NavMenu";
 
 const NAV_LINKS = [
   { label: "Home", href: "#home", isHome: true },
@@ -21,8 +22,6 @@ export default function Navbar({ isDark, onToggleTheme }: NavbarProps) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const isMobile = useIsMobile(768);
   const isTablet = useIsMobile(1024);
-  const menuRef = useRef<HTMLDivElement>(null);
-  const dropdownRef = useRef<HTMLDivElement>(null);
   
   const sectionIds = useMemo(() => NAV_LINKS.map((link) => link.href.replace("#", "")), []);
   const activeSection = useActiveSection(sectionIds);
@@ -30,34 +29,6 @@ export default function Navbar({ isDark, onToggleTheme }: NavbarProps) {
   const currentSectionLabel = NAV_LINKS.find(
     (link) => link.href.replace("#", "") === activeSection
   )?.label || NAV_LINKS[0].label;
-
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        setIsMenuOpen(false);
-        setIsDropdownOpen(false);
-      }
-    };
-
-    const handleClickOutside = (e: MouseEvent) => {
-      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
-        setIsMenuOpen(false);
-      }
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setIsDropdownOpen(false);
-      }
-    };
-
-    if (isMenuOpen || isDropdownOpen) {
-      document.addEventListener("keydown", handleEscape);
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("keydown", handleEscape);
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isMenuOpen, isDropdownOpen]);
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string, isHome?: boolean) => {
     e.preventDefault();
@@ -116,7 +87,7 @@ export default function Navbar({ isDark, onToggleTheme }: NavbarProps) {
         )}
 
         {!isMobile && isTablet && (
-          <div className="flex-1 flex justify-center relative" ref={dropdownRef}>
+          <div className="flex-1 flex justify-center">
             <button
               onClick={() => setIsDropdownOpen(!isDropdownOpen)}
               onMouseDown={(e) => e.stopPropagation()}
@@ -205,95 +176,41 @@ export default function Navbar({ isDark, onToggleTheme }: NavbarProps) {
         </div>
       </div>
 
-      <AnimatePresence>
-        {!isMobile && isTablet && isDropdownOpen && (
-          <motion.div
-            initial={{
-              opacity: 0,
-              scale: 0.95,
-              y: -8,
-              backdropFilter: "blur(0px)",
-            }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              y: 0,
-              backdropFilter: "blur(12px)",
-            }}
-            exit={{
-              opacity: 0,
-              scale: 0.95,
-              y: -8,
-              backdropFilter: "blur(0px)",
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 400,
-              damping: 30,
-            }}
-            className="absolute top-full left-1/2 -translate-x-1/2 mt-2 w-48 z-40 origin-top"
+      <NavMenu
+        isOpen={!isMobile && isTablet && isDropdownOpen}
+        onClose={() => setIsDropdownOpen(false)}
+        align="center"
+      >
+        {NAV_LINKS.map(({ label, href, isHome }) => (
+          <a
+            key={label}
+            href={href}
+            onClick={(e) => handleLinkClick(e, href, isHome)}
+            className="px-4 py-3 text-sm font-medium text-foreground/80 hover:text-foreground transition-colors rounded-xl hover:bg-white/30 dark:hover:bg-white/10 text-center block"
+            style={{ fontFamily: "var(--font-inter)" }}
           >
-            <div className="glass-card rounded-2xl p-3 flex flex-col gap-1">
-              {NAV_LINKS.map(({ label, href, isHome }) => (
-                <a
-                  key={label}
-                  href={href}
-                  onClick={(e) => handleLinkClick(e, href, isHome)}
-                  className="px-4 py-3 text-sm font-medium text-foreground/80 hover:text-foreground transition-colors rounded-xl hover:bg-white/30 dark:hover:bg-white/10 text-center"
-                  style={{ fontFamily: "var(--font-inter)" }}
-                >
-                  {label}
-                </a>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            {label}
+          </a>
+        ))}
+      </NavMenu>
 
-      <AnimatePresence>
-        {isMobile && isMenuOpen && (
-          <motion.div
-            initial={{
-              opacity: 0,
-              scale: 0.95,
-              y: -8,
-              backdropFilter: "blur(0px)",
-            }}
-            animate={{
-              opacity: 1,
-              scale: 1,
-              y: 0,
-              backdropFilter: "blur(12px)",
-            }}
-            exit={{
-              opacity: 0,
-              scale: 0.95,
-              y: -8,
-              backdropFilter: "blur(0px)",
-            }}
-            transition={{
-              type: "spring",
-              stiffness: 400,
-              damping: 30,
-            }}
-            className="absolute top-full right-4 sm:right-6 mt-2 w-48 z-40 origin-top-right"
+      <NavMenu
+        isOpen={isMobile && isMenuOpen}
+        onClose={() => setIsMenuOpen(false)}
+        align="right"
+      >
+        {NAV_LINKS.map(({ label, href, isHome }) => (
+          <a
+            key={label}
+            href={href}
+            onClick={(e) => handleLinkClick(e, href, isHome)}
+            className="px-4 py-3 text-sm font-medium text-foreground/80 hover:text-foreground transition-colors rounded-xl hover:bg-white/30 dark:hover:bg-white/10 text-center block"
+            style={{ fontFamily: "var(--font-inter)" }}
           >
-            <div ref={menuRef} className="glass-card rounded-2xl p-3 flex flex-col gap-1">
-              {NAV_LINKS.map(({ label, href, isHome }) => (
-                <a
-                  key={label}
-                  href={href}
-                  onClick={(e) => handleLinkClick(e, href, isHome)}
-                  className="px-4 py-3 text-sm font-medium text-foreground/80 hover:text-foreground transition-colors rounded-xl hover:bg-white/30 dark:hover:bg-white/10 text-center"
-                  style={{ fontFamily: "var(--font-inter)" }}
-                >
-                  {label}
-                </a>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            {label}
+          </a>
+        ))}
+      </NavMenu>
     </nav>
   );
 }

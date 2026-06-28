@@ -32,7 +32,62 @@ const ICONS = [
   { id: "vite",     Icon: ViteLogo,   label: "Vite",       left: "45%",  top: "93%",  mLeft: "40%",  mTop: "93%", dur: "7.8s", delay: "4.1s",  tilt: "-2deg" },
 ];
 
+const ORBS = [
+  { className: "-top-40 -left-40 w-[520px] h-[520px] opacity-30 dark:opacity-40", style: "radial-gradient(circle, var(--color-orb-violet) 0%, transparent 70%)" },
+  { className: "-top-20 right-0 w-[420px] h-[420px] blur-[90px] opacity-25 dark:opacity-35", style: "radial-gradient(circle, var(--color-orb-blue) 0%, transparent 70%)" },
+  { className: "bottom-0 left-1/4 w-[480px] h-[320px] opacity-20 dark:opacity-30", style: "radial-gradient(circle, var(--color-orb-cyan) 0%, transparent 70%)" },
+  { className: "top-1/2 -translate-y-1/2 right-1/4 w-[300px] h-[300px] blur-[80px] opacity-[0.18] dark:opacity-25", style: "radial-gradient(circle, var(--color-orb-pink) 0%, transparent 70%)" },
+  { className: "bottom-10 right-10 w-[360px] h-[260px] blur-[90px] opacity-20 dark:opacity-[0.28]", style: "radial-gradient(circle, var(--color-orb-indigo) 0%, transparent 70%)" },
+];
+
 const SKILLS = ["React", "Next.js", "TypeScript", "Node.js", "Supabase", "TailwindCSS"];
+
+const SOCIAL_LINKS = [
+  { href: "https://github.com/HomamDev", label: "https://github.com/HomamDev", icon: <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" /> },
+  { href: "https://x.com/HomamDev", label: "https://x.com/HomamDev", icon: <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.745l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" /> },
+  { href: "https://youtube.com/@HomamDev", label: "https://youtube.com/@HomamDev", icon: <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/> },
+];
+
+interface SectionPlaceholderProps {
+  id: string;
+  title: string;
+  description: string;
+}
+
+function SectionPlaceholder({ id, title, description }: SectionPlaceholderProps) {
+  return (
+    <section id={id} className="relative z-20 w-full min-h-screen flex items-center justify-center pt-20">
+      <div className="text-center px-4 max-w-2xl">
+        <h2 className="text-4xl font-bold text-foreground mb-4" style={{ fontFamily: "var(--font-outfit)" }}>{title}</h2>
+        <p className="text-foreground/60 text-lg" style={{ fontFamily: "var(--font-inter)" }}>{description}</p>
+      </div>
+    </section>
+  );
+}
+
+interface SocialLinkProps {
+  href: string;
+  label: string;
+  icon: React.ReactNode;
+  className?: string;
+}
+
+function SocialLink({ href, label, icon, className }: SocialLinkProps) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`transition-[color,transform] duration-200 hover:-translate-y-px inline-flex items-center gap-2 text-foreground/40 dark:text-foreground/35 hover:text-foreground/70 dark:hover:text-foreground/60 text-sm ${className ?? ""}`}
+      style={{ fontFamily: "var(--font-inter)" }}
+    >
+      <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current flex-shrink-0" aria-hidden>
+        {icon}
+      </svg>
+      <span>{label}</span>
+    </a>
+  );
+}
 
 export default function App() {
   const [isDark, setIsDark] = useState(() => 
@@ -54,29 +109,14 @@ export default function App() {
       <Navbar isDark={isDark} onToggleTheme={toggleTheme} />
 
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div
-          className="orb -top-40 -left-40 w-[520px] h-[520px] opacity-30 dark:opacity-40"
-          style={{ background: "radial-gradient(circle, var(--color-orb-violet) 0%, transparent 70%)" }}
-        />
-        <div
-          className="orb -top-20 right-0 w-[420px] h-[420px] blur-[90px] opacity-25 dark:opacity-35"
-          style={{ background: "radial-gradient(circle, var(--color-orb-blue) 0%, transparent 70%)" }}
-        />
-        <div
-          className="orb bottom-0 left-1/4 w-[480px] h-[320px] opacity-20 dark:opacity-30"
-          style={{ background: "radial-gradient(circle, var(--color-orb-cyan) 0%, transparent 70%)" }}
-        />
-        <div
-          className="orb top-1/2 -translate-y-1/2 right-1/4 w-[300px] h-[300px] blur-[80px] opacity-[0.18] dark:opacity-25"
-          style={{ background: "radial-gradient(circle, var(--color-orb-pink) 0%, transparent 70%)" }}
-        />
-        <div
-          className="orb bottom-10 right-10 w-[360px] h-[260px] blur-[90px] opacity-20 dark:opacity-[0.28]"
-          style={{ background: "radial-gradient(circle, var(--color-orb-indigo) 0%, transparent 70%)" }}
-        />
-        <div
-          className="absolute inset-0 grid-pattern opacity-[0.025] dark:opacity-[0.04]"
-        />
+        {ORBS.map((orb, i) => (
+          <div
+            key={i}
+            className={`orb ${orb.className}`}
+            style={{ background: orb.style }}
+          />
+        ))}
+        <div className="absolute inset-0 grid-pattern opacity-[0.025] dark:opacity-[0.04]" />
       </div>
 
       {ICONS.map(({ id, Icon, label, left, top, right, mLeft, mTop, mRight, dur, delay, tilt }) => {
@@ -148,66 +188,20 @@ export default function App() {
           ))}
         </div>
 
-        <a
-          href="https://github.com/HomamDev"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="transition-[color,transform] duration-200 hover:-translate-y-px inline-flex items-center gap-2 text-foreground/40 dark:text-foreground/35 hover:text-foreground/70 dark:hover:text-foreground/60 text-sm"
-          style={{ fontFamily: "var(--font-inter)" }}
-        >
-          <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current flex-shrink-0" aria-hidden>
-            <path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12" />
-          </svg>
-          <span>https://github.com/HomamDev</span>
-        </a>
-
-        <a
-          href="https://x.com/HomamDev"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="transition-[color,transform] duration-200 hover:-translate-y-px inline-flex items-center gap-2 text-foreground/40 dark:text-foreground/35 hover:text-foreground/70 dark:hover:text-foreground/60 text-sm mt-2"
-          style={{ fontFamily: "var(--font-inter)" }}
-        >
-          <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current flex-shrink-0" aria-hidden>
-            <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.745l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-          </svg>
-          <span>https://x.com/HomamDev</span>
-        </a>
-
-        <a
-          href="https://youtube.com/@HomamDev"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="transition-[color,transform] duration-200 hover:-translate-y-px inline-flex items-center gap-2 text-foreground/40 dark:text-foreground/35 hover:text-foreground/70 dark:hover:text-foreground/60 text-sm mt-2"
-          style={{ fontFamily: "var(--font-inter)" }}
-        >
-          <svg viewBox="0 0 24 24" className="w-3.5 h-3.5 fill-current flex-shrink-0" aria-hidden>
-            <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-          </svg>
-          <span>https://youtube.com/@HomamDev</span>
-        </a>
+        {SOCIAL_LINKS.map((link, i) => (
+          <SocialLink
+            key={link.href}
+            href={link.href}
+            label={link.label}
+            icon={link.icon}
+            className={i > 0 ? "mt-2" : undefined}
+          />
+        ))}
       </div>
 
-      <section id="about" className="relative z-20 w-full min-h-screen flex items-center justify-center pt-20">
-        <div className="text-center px-4 max-w-2xl">
-          <h2 className="text-4xl font-bold text-foreground mb-4" style={{ fontFamily: "var(--font-outfit)" }}>About</h2>
-          <p className="text-foreground/60 text-lg" style={{ fontFamily: "var(--font-inter)" }}>Learn more about me and my journey as a developer</p>
-        </div>
-      </section>
-
-      <section id="projects" className="relative z-20 w-full min-h-screen flex items-center justify-center pt-20">
-        <div className="text-center px-4 max-w-2xl">
-          <h2 className="text-4xl font-bold text-foreground mb-4" style={{ fontFamily: "var(--font-outfit)" }}>Projects</h2>
-          <p className="text-foreground/60 text-lg" style={{ fontFamily: "var(--font-inter)" }}>Check out my latest work and projects</p>
-        </div>
-      </section>
-
-      <section id="contact" className="relative z-20 w-full min-h-screen flex items-center justify-center pt-20">
-        <div className="text-center px-4 max-w-2xl">
-          <h2 className="text-4xl font-bold text-foreground mb-4" style={{ fontFamily: "var(--font-outfit)" }}>Contact</h2>
-          <p className="text-foreground/60 text-lg" style={{ fontFamily: "var(--font-inter)" }}>Get in touch with me</p>
-        </div>
-      </section>
+      <SectionPlaceholder id="about" title="About" description="Learn more about me and my journey as a developer" />
+      <SectionPlaceholder id="projects" title="Projects" description="Check out my latest work and projects" />
+      <SectionPlaceholder id="contact" title="Contact" description="Get in touch with me" />
     </div>
   );
 }

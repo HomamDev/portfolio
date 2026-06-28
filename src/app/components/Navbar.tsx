@@ -276,7 +276,7 @@ export default function Navbar({ isDark, onToggleTheme }: NavbarProps) {
               stiffness: 400,
               damping: 30,
             }}
-            className="absolute top-full left-4 right-4 sm:left-6 sm:right-6 mt-2 max-w-5xl mx-auto z-40 origin-top"
+            className="absolute top-full right-4 sm:right-6 mt-2 w-48 z-40 origin-top-right"
           >
             <div ref={menuRef} className="glass-card rounded-2xl p-3 flex flex-col gap-1">
               {NAV_LINKS.map(({ label, href, isHome }) => (

@@ -1,4 +1,5 @@
 import SocialLink from "@/app/components/SocialLink";
+import FloatingIcons from "@/app/components/sections/FloatingIcons";
 
 const SKILLS = ["React", "Next.js", "TypeScript", "Node.js", "Supabase", "TailwindCSS"];
 
@@ -8,53 +9,58 @@ const SOCIAL_LINKS = [
   { href: "https://youtube.com/@HomamDev", label: "https://youtube.com/@HomamDev", icon: <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/> },
 ];
 
-export default function HeroSection() {
+export default function HeroSection({ isDark }: { isDark: boolean }) {
   return (
-    <div id="home" className="relative z-20 flex flex-col items-center text-center px-4 sm:px-6 max-w-xl w-full mt-40 sm:mt-44">
-      <div className="glass-pill rounded-full px-4 sm:px-5 py-1.5 mb-4 sm:mb-6 inline-flex items-center gap-1.5">
-        <span
-          className="text-sm text-violet-600 dark:text-violet-400 font-semibold tracking-widest"
-          style={{ fontFamily: "var(--font-jetbrains)" }}
-        >
-          {"<developer />"}
-        </span>
-      </div>
+    <section id="home" className="relative w-full min-h-screen">
+      <div className="relative w-full max-w-5xl mx-auto min-h-screen">
+        <FloatingIcons isDark={isDark} />
+        <div className="relative z-20 flex flex-col items-center text-center px-4 sm:px-6 max-w-xl w-full mt-40 sm:mt-44 mx-auto">
+          <div className="glass-pill rounded-full px-4 sm:px-5 py-1.5 mb-4 sm:mb-6 inline-flex items-center gap-1.5">
+            <span
+              className="text-sm text-violet-600 dark:text-violet-400 font-semibold tracking-widest"
+              style={{ fontFamily: "var(--font-jetbrains)" }}
+            >
+              {"<developer />"}
+            </span>
+          </div>
 
-      <h1
-        className="gradient-text text-[clamp(3rem,12vw,7rem)] font-black tracking-tight leading-none mb-2 sm:mb-3"
-        style={{ fontFamily: "var(--font-outfit)" }}
-      >
-        Homam
-      </h1>
+          <h1
+            className="gradient-text text-[clamp(3rem,12vw,7rem)] font-black tracking-tight leading-none mb-2 sm:mb-3"
+            style={{ fontFamily: "var(--font-outfit)" }}
+          >
+            Homam
+          </h1>
 
-      <p
-        className="text-foreground/60 dark:text-foreground/55 text-base sm:text-lg md:text-xl font-medium tracking-wide mb-5 sm:mb-7"
-        style={{ fontFamily: "var(--font-inter)" }}
-      >
-        Full-Stack Developer&nbsp;&nbsp;·&nbsp;&nbsp;Building for the web
-      </p>
-
-      <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-6 sm:mb-9">
-        {SKILLS.map((skill) => (
-          <span
-            key={skill}
-            className="glass-chip rounded-full px-4 py-1.5 text-sm font-semibold text-foreground/75 dark:text-foreground/70"
+          <p
+            className="text-foreground/60 dark:text-foreground/55 text-base sm:text-lg md:text-xl font-medium tracking-wide mb-5 sm:mb-7"
             style={{ fontFamily: "var(--font-inter)" }}
           >
-            {skill}
-          </span>
-        ))}
-      </div>
+            Full-Stack Developer&nbsp;&nbsp;·&nbsp;&nbsp;Building for the web
+          </p>
 
-      {SOCIAL_LINKS.map((link, i) => (
-        <SocialLink
-          key={link.href}
-          href={link.href}
-          label={link.label}
-          icon={link.icon}
-          className={i > 0 ? "mt-2" : undefined}
-        />
-      ))}
-    </div>
+          <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2 mb-6 sm:mb-9">
+            {SKILLS.map((skill) => (
+              <span
+                key={skill}
+                className="glass-chip rounded-full px-4 py-1.5 text-sm font-semibold text-foreground/75 dark:text-foreground/70"
+                style={{ fontFamily: "var(--font-inter)" }}
+              >
+                {skill}
+              </span>
+            ))}
+          </div>
+
+          {SOCIAL_LINKS.map((link, i) => (
+            <SocialLink
+              key={link.href}
+              href={link.href}
+              label={link.label}
+              icon={link.icon}
+              className={i > 0 ? "mt-2" : undefined}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
   );
 }
